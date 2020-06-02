@@ -1260,9 +1260,12 @@ public enum MajesticDawn implements LogicCardInfo {
           move "Hand Trick", {
             text "20 damage. Return Aipom and all cards attached to it to your hand. (If you don’t have any Benched Pokémon, this attack does nothing.)"
             energyCost C, C
-            attackRequirement {}
             onAttack {
-              damage 0
+              if (my.bench.notEmpty) {
+                damage 20
+                self.cards.moveTo(hand)
+                removePCS(self)
+              }
             }
           }
 
